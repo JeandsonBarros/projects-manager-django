@@ -68,6 +68,6 @@ def editProject(request, pk):
 def delete(request, pk):
     project = Project.objects.get(pk=pk)
     project.delete()
-    
+    messages.success(request, f"Projeto {project.name} deletado!")
     return redirect('projects')
 
