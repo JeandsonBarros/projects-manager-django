@@ -1,0 +1,64 @@
+{% include 'project/includes/header.html' %}
+
+<main>
+
+
+  <div class="container-sm">
+
+    {% if project %}
+      <h1 class="mt-4">Editar projeto</h1>
+    {% else %}
+      <h1 class="mt-4">Cadastrar projeto</h1>
+    {% endif %}
+
+    <div class="mt-3">
+
+      <div id="alert">
+       
+      </div>
+
+      <form 
+        {% if project %} onsubmit="editProject(event);" {% endif %}
+        id="form" 
+        action="{% if project %}{% url 'editProject' project.id %}{% else %}{% url 'createProject' %}{% endif %}" 
+        method="POST" >
+
+        {% comment %} {{ form.as_p }} {% endcomment %}
+        {% comment %} {{ form.name.value }} {% endcomment %}
+
+        {% csrf_token %}
+
+        <div class="form-group ">
+          <label for="id_name"> Nome:</label>
+          {{ form.name }}
+        </div>
+
+        <div class="form-group mt-3">
+          <label for="id_manager">Gerente:</label>
+          {{ form.manager }}
+        </div>
+
+        <div class="form-group mt-3" style="width: 150px;">
+          <label for="id_deadline">Prazo:</label>
+          {{ form.deadline }}
+        </div>
+
+        <div class="form-group mt-3" oninput="result.value=id_description.value.length">
+          <label for="id_description"> Descrição: </label>
+          {{ form.description }}
+          <small>
+            <output id="result">{{ form.description.value|length }}</output>/200
+          </small>
+        </div>
+
+        <input class="btn btn-info mt-2" type="submit" value="Salvar">
+
+      </form>
+
+
+    </div>
+  </div>
+
+</main>
+
+{% include "project/includes/footer.html" %}

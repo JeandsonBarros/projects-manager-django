@@ -1,0 +1,23 @@
+{% include 'project/includes/header.html' %}
+
+<main>
+
+  <div class="container">
+
+    <h1>Projeto: {{ project.name }}</h1>
+
+    <div class="cardProject mt-3">
+      <div style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">{{ project.name }}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{ project.description }}</h6>
+          <p class="card-text">{{ project.manager }}</p>
+          <span href="#" class="card-link">{{ project.deadline }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+{% include 'project/includes/footer.html' %}
