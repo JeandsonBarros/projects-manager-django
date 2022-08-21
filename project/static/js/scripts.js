@@ -1,31 +1,29 @@
-/* ((doc, win) => {
 
+/* ---------- Start script dark theme ------------ */
+
+var check = document.querySelector('#trigger')
+var html = document.querySelector('html')
+
+if (!localStorage.getItem('dark')) {
     const prefersColorScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    
+    localStorage.setItem('dark', prefersColorScheme.matches)
+    check.checked = prefersColorScheme.matches
+} 
 
-    if (prefersColorScheme.matches) {
-        
-        doc.body.style.backgroundColor = "rgb(50,50,50)";
-        doc.body.style.color = "#fff";
-        doc.getElementsByTagName('header')[0].style.background = '#5a5a5a'
-        doc.getElementsByTagName('footer')[0].style.background = '#5a5a5a'
-        doc.getElementsByTagName('nav')[0].style.background = '#3a3a3a'
+var isDark = JSON.parse(localStorage.getItem('dark'))
 
-        let inputs = doc.querySelectorAll('.form-control')
-        inputs.forEach(input => {
-            input.style.backgroundColor = '#3a3a3a'
-            input.style.color = '#fff'
-        })
+if (isDark) {
+    html.classList.toggle('dark')
+    check.checked = true
+}
 
-        let cards = doc.querySelectorAll(".cardProject")
-        cards.forEach(card => {
-            card.style.background = '#323232';
-            card.style.boxShadow = '20px 20px 60px #2b2b2b, -20px -20px 60px #3a3a3a';
+check.addEventListener('change', () => {
+    let booleanTpggle = html.classList.toggle('dark')
+    localStorage.setItem('dark', booleanTpggle)
+})
 
-        })
-    }
-
-})(document, window)
- */
+/* ---------- End script dark theme ------------ */
 
 function deleteProject(id, name) {
     if (confirm(`Realmente deseja deletar o projeto ${name}?`)) {

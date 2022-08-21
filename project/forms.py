@@ -3,10 +3,6 @@ from django import forms
 from project.models import Project
 
 
-class DateInputDeadline(forms.DateInput):
-    input_type = 'date'
-
-
 class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
@@ -19,6 +15,7 @@ class ProjectForm(forms.ModelForm):
             'description': forms.Textarea(attrs={
                 'class': 'form-control',
                 'placeholder': 'Descrição rápida do projeto',
+                'spellcheck': 'true'
                 
             }),
             'manager': forms.TextInput(attrs={
@@ -27,6 +24,6 @@ class ProjectForm(forms.ModelForm):
             }),
             'deadline': forms.DateInput(attrs={
                 'type': 'date',
-                'class': 'form-control',
+                'class': 'form-control',            
              })
         }

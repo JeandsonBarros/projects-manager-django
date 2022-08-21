@@ -64,19 +64,20 @@
 
         <li>
           <a href="{% url 'projects' %}"
-            class="nav-link px-2 me-2 btn  {% if request.path == '/projetos/' %}  btn-info text-white {% else %} text-dark {% endif %}">Home</a>
+            class="nav-link px-2 me-2 btn  {% if request.path == '/projetos/' %}  btn-info text-white {% else %} text-white {% endif %}">Home</a>
         </li>
         <li>
           <a href="{% url 'createProject' %}"
-            class="nav-link px-2 btn {% if 'criar' in request.path %} btn-info text-white {% else %} text-dark  {% endif %}">Novo
+            class="nav-link px-2 btn {% if 'criar' in request.path %} btn-info text-white {% else %} text-white  {% endif %}">Novo
             projeto</a>
         </li>
 
       </ul>
 
-      <div class="d-flex flex-row align-items-center">
+      <div class="d-flex flex-row flex-wrap align-items-center">
 
-        <form action="{% url 'projects' %}" method="get" id="formSearch" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+        <form action="{% url 'projects' %}" method="get" id="formSearch" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3"
+          role="search">
 
           <div class="input-group">
             <span class="input-group-text bg-info border-0" id="basic-addon1">
@@ -89,8 +90,9 @@
 
         </form>
 
-        <div class="form-check form-switch">
-          <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+        <div class="divTrigger d-flex align-items-center rounded-pill p-1 shadow-sm">
+          <input id="trigger" type="checkbox">
+          <label for="trigger" class="checker"></label>
         </div>
 
       </div>
