@@ -126,6 +126,10 @@ main {
     width: 300px;
 }
 
+.progress{
+    width: 230px;
+}
+
 .option:hover {
     filter: drop-shadow(1px 1px 6px rgba(100, 100, 100, 0.5));
 }
@@ -152,5 +156,23 @@ footer>span>a:hover {
     text-decoration: underline;
 }
 
-
+/* width */
+::-webkit-scrollbar {
+    width: 20px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: rgba(0, 225, 255, 0.342); 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 225, 255, 0.5); 
+  }
 

@@ -49,7 +49,7 @@ async function editProject(e) {
     }
 
     var htmlAlert = '<div class="alert alert-success alert-dismissible fade show " role="alert">' +
-        '<strong> message-here </strong>' +
+        '<span> message-here </span>' +
         '<button type="button" class="btn-close" onclick="hidenAlert()"</button>' +
         '</div>';
     const alert = document.querySelector('#alert')
@@ -71,12 +71,23 @@ async function editProject(e) {
         } else {
             htmlAlert = htmlAlert.replace('success', 'danger')
             alert.innerHTML = htmlAlert.replace('message-here', 'Erro ao editar projeto!')
+
+            window.scroll({
+                top: 0,
+                behavior: 'smooth'
+            })
         }
 
     } catch (error) {
         console.log(error)
+
         htmlAlert = htmlAlert.replace('success', 'danger')
         alert.innerHTML = htmlAlert.replace('message-here', 'Erro ao editar projeto!')
+     
+        window.scroll({
+            top: 0,
+            behavior: 'smooth'
+        })
     }
 
 }

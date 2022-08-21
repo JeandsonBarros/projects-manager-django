@@ -9,10 +9,51 @@
     <div class="cardProject mt-3">
       <div style="width: 18rem;">
         <div class="card-body">
-          <h5 class="card-title">{{ project.name }}</h5>
-          <h6 class="card-subtitle mb-2 text-muted">{{ project.description }}</h6>
-          <p class="card-text">{{ project.manager }}</p>
-          <span href="#" class="card-link">{{ project.deadline }}</span>
+          <h5 class="card-title mb-2">{{ project.name }}</h5>
+          <span class="card-text">Gerente: {{ project.manager }}</span> <br>
+          <span class="card-text">Prazo: {{ project.deadline|date:"d/m/y" }}</span> <br>
+
+            <pspan class="card-text">
+              Orçamento: 
+              {% if project.budget %} 
+                {{ project.budget }}  
+              {% else %}  
+                Não definido  
+              {% endif %}
+            </span> <br>
+
+          <p class="card-text">
+              Status: {{ project.status }}
+              {% if project.status == 'Em desenvolvimento' %}
+            <div class="progress" style="width: 260px;">
+              <div class="progress-bar progress-bar-striped bg-primary" role="progressbar"
+                aria-label="Success striped example" style="width: 25%" aria-valuenow="25" aria-valuemin="0"
+                aria-valuemax="100"></div>
+            </div>
+            {% elif project.status == 'Em planejamento' %}
+            <div class="progress" style="width: 260px;">
+              <div class="progress-bar progress-bar-striped bg-info" role="progressbar"
+                aria-label="Success striped example" style="width: 10%" aria-valuenow="25" aria-valuemin="0"
+                aria-valuemax="100"></div>
+            </div>
+            {% elif project.status == 'Concluído' %}
+            <div class="progress" style="width: 260px;">
+              <div class="progress-bar progress-bar-striped bg-success" role="progressbar"
+                aria-label="Success striped example" style="width: 100%" aria-valuenow="25" aria-valuemin="0"
+                aria-valuemax="100"></div>
+            </div>
+            {% elif project.status == 'Cancelado' %}
+            <div class="progress" style="width: 260px;">
+              <div class="progress-bar progress-bar-striped bg-danger" role="progressbar"
+                aria-label="Success striped example" style="width: 100%" aria-valuenow="25" aria-valuemin="0"
+                aria-valuemax="100"></div>
+            </div>
+            {% endif %}
+           
+          </p>
+
+          <h6 class="card-subtitle mb-2 mt-1 text-muted">{{ project.description }}</h6>
+
         </div>
       </div>
     </div>

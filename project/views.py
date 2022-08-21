@@ -5,7 +5,6 @@ from django.http import HttpResponse
 from django.contrib import messages
 
 def index(request):
-
     data = {}
     data['projects'] = Project.objects.all()
 
@@ -39,12 +38,11 @@ def saveProject(request):
 def viewProject(request, pk):
     data = {}
     data['project'] = Project.objects.get(pk=pk)
-    print(data)
+
     return render(request, 'project/view_project.html', data)
 
 
-def editProject(request, pk):
-    
+def editProject(request, pk):  
     data = {}
     data['project'] = Project.objects.get(pk=pk)
 
@@ -70,5 +68,6 @@ def editProject(request, pk):
 def delete(request, pk):
     project = Project.objects.get(pk=pk)
     project.delete()
+    
     return redirect('projects')
 
