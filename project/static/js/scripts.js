@@ -25,9 +25,23 @@ check.addEventListener('change', () => {
 
 /* ---------- End script dark theme ------------ */
 
-function deleteProject(id, name) {
-    if (confirm(`Realmente deseja deletar o projeto ${name}?`)) {
-        window.location.href = `${location.origin}/projetos/delete/${id}`
+/* ----------- Start script modal ---------*/
+
+function modalService(display){
+    
+    let divModal = document.querySelector('#divModal')
+    let formService = document.querySelector('#formService')
+    
+    divModal.style.display = display
+    formService.style.display = display
+}
+
+/* ----------- end script modal ---------*/
+
+
+function deleteConfirm(message, path) {
+    if (confirm(message)) {
+        window.location.href = `${location.origin}${path}`
     }
 }
 

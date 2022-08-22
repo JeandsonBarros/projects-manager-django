@@ -9,3 +9,4 @@ class Project(models.Model):
     deadline = models.DateField()
     status = models.CharField(max_length=200)
     budget = models.IntegerField(null=True, blank=True)
+    #spentBudget = models.IntegerField(null=True, blank=True)

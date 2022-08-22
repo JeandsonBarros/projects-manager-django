@@ -117,18 +117,25 @@ main {
     min-height: 100vh;
 }
 
+.success{
+    background-color: rgba(0, 128, 49, 0.651);
+    color: #ffffff;
+}
+
+.error{
+    background-color: rgba(255, 0, 0, 0.562);
+    color: #ffffff;
+}
+
 .cardProject {
     border-radius: 20px;
     background: var(--background);
     box-shadow: var(--carShadow);
     padding: 20px;
     margin: 20px;
-    width: 300px;
+    /* width: 300px; */
 }
 
-.progress {
-    width: 230px;
-}
 
 .option:hover {
     filter: drop-shadow(1px 1px 6px rgba(100, 100, 100, 0.5));
@@ -151,7 +158,23 @@ main {
 .labelForm::before {
     color: red;
     content: "*";
-  }
+}
+
+#divModal {
+    display: none;
+    position: fixed;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 6;
+    background-color: rgba(0, 0, 0, 0.425);
+}
+
+#formService{
+    display: none;
+    z-index: 9;
+    width:  70vw;
+}
 
 footer>span>a {
     text-decoration: none;

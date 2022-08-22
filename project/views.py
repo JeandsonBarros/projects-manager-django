@@ -3,6 +3,8 @@ from project.forms import ProjectForm
 from project.models import Project
 from django.http import HttpResponse
 from django.contrib import messages
+from service.forms import ServiceForm
+from service.models import Service
 
 def index(request):
     data = {}
@@ -23,7 +25,7 @@ def saveProject(request):
     elif request.method == 'POST':
         form = ProjectForm(request.POST or None)
 
-        if form.is_valid:
+        if form.is_valid():
             try:
                 form.save()
                 messages.success(request, "Projeto salvo!")
@@ -31,13 +33,22 @@ def saveProject(request):
 
             except NameError: 
                 print(NameError)
-                messages.danger(request, "Erro ao salvar o projeto!")
+                messages.error(request, "Erro ao salvar o projeto!")
                 return redirect('projects')
             
             
 def viewProject(request, pk):
     data = {}
     data['project'] = Project.objects.get(pk=pk)
+    data['services'] = Service.objects.filter(project=pk)
+
+    spentBudget = 0
+
+    for servicBudget in data['services']:
+        spentBudget += servicBudget.price
+   
+    data['serviceForm'] = ServiceForm()
+    data['spentBudget'] = spentBudget
 
     return render(request, 'project/view_project.html', data)
 
