@@ -37,8 +37,21 @@ def save(request, pkProject):
         return redirect('projects')
 
 
-def edit(request, pk):
-    return 1
+def edit(request, pkProject, pk):
+
+    service = Service.objects.get(pk=pk)
+
+    form = ServiceForm(request.POST or None, instance=service)
+    if form.is_valid():
+        try:
+            form.save()
+        except:
+            print("================")
+            print("|---- Erro ----|")
+            print("================")
+        
+
+    return redirect(reverse('viewProject', args=[pkProject]))
 
 def delete(request, pkProject, pk):
     service = get_object_or_404(Service, pk=pk)

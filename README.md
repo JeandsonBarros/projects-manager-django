@@ -9,11 +9,5 @@
 `pip freeze > requirements.txt`
 `pip install -r requirements.txt`
 
-service: {
-    project,
-    name:
-    price:
-    description
-}
 
 

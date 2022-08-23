@@ -3,41 +3,43 @@
 <main>
 
   <!-- ------------- Modal start ---------------- -->
-  <form id="formService" action="{% url 'saveService' project.id %}" method="post"
-    class="cardProject shadow mt-3 position-fixed top-50 start-50 translate-middle">
-
-    {% csrf_token %}
-
-    <div class="d-flex flex-row justify-content-between">
-      <h5 class="card-title">Cadastrar serviço</h5>
-      <button type="button" onclick="modalService('none')" class="btn-close" id="closeServiceForm"
-        aria-label="Close"></button>
-    </div>
-
-    <div id="inputsService">
-
-      <div class="mt-2">
-        <label for="id_name">Nome do serviço: </label>
-        {{ serviceForm.name }}
-      </div>
-
-      <div class="mt-2" style="width: 10rem">
-        <label for="id_price">Custo: </label>
-        {{ serviceForm.price }}
-      </div>
-
-      <div class="mt-2">
-        <label for="id_description">Descrição: </label>
-        {{ serviceForm.description}}
-      </div>
-
-      <input class="btn btn-info mt-5" type="submit" value="Salvar">
-      <input class="btn btn-danger mt-5" type="button" onclick="modalService('none')" value="Cancelar">
-
-    </div>
-  </form>
-
+ 
   <div id="divModal" onclick="modalService('none')"></div>
+
+  <form id="formService" onsubmit="editService(event)" action="{% url 'saveService' project.id %}" method="post"> 
+
+  {% csrf_token %}
+
+  <div class="d-flex flex-row justify-content-between">
+    <h5 class="card-title">Cadastrar serviço</h5>
+    <button type="button" onclick="modalService('none')" class="btn-close" id="closeServiceForm"
+      aria-label="Close"></button>
+  </div>
+
+  <div id="inputsService">
+
+    <div class="mt-2">
+      <label for="id_name">Nome do serviço: </label>
+      {{ serviceForm.name }}
+    </div>
+
+    <div class="mt-2" style="width: 10rem">
+      <label for="id_price">Custo: </label>
+      {{ serviceForm.price }}
+    </div>
+
+    <div class="mt-2">
+      <label for="id_description">Descrição: </label>
+      {{ serviceForm.description}}
+    </div>
+
+    <input class="btn btn-info mt-5" type="submit" value="Salvar">
+    <input class="btn btn-danger mt-5" type="button" onclick="modalService('none')" value="Cancelar">
+
+  </div>
+</form>
+
+
 
   <!-- ------------- Modal end ---------------- -->
 
@@ -82,23 +84,27 @@
             aria-label="Success striped example" style="width: 50%" aria-valuenow="25" aria-valuemin="0"
             aria-valuemax="100"></div>
         </div>
+
         {% elif project.status == 'Em planejamento' %}
         <div class="progress">
           <div class="progress-bar progress-bar-striped bg-info" role="progressbar" aria-label="Success striped example"
             style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
+
         {% elif project.status == 'Concluído' %}
         <div class="progress" style="width: 100%;">
           <div class="progress-bar progress-bar-striped bg-success" role="progressbar"
             aria-label="Success striped example" style="width: 100%" aria-valuenow="25" aria-valuemin="0"
             aria-valuemax="100"></div>
         </div>
+
         {% elif project.status == 'Cancelado' %}
         <div class="progress">
           <div class="progress-bar progress-bar-striped bg-danger" role="progressbar"
             aria-label="Success striped example" style="width: 100%" aria-valuenow="25" aria-valuemin="0"
             aria-valuemax="100"></div>
         </div>
+
         {% endif %}
 
         <p class="mb-3 mt-1 text-muted">{{ project.description }}</p>
@@ -151,12 +157,13 @@
         {% for service in services %}
         <div class="m-3 rounded-3 shadow p-3">
           <h6 class="card-title mb-2">{{ service.name }}</h6>
+          <h6 class="card-title mb-2">{{ service.id }}</h6>
           <p>Custo: R$ {{ service.price }}</p>
           <p class="text-muted mb-3">Descrição: {{ service.description }}</p>
 
           <div>
 
-            <a href="{% url 'editProject' project.id %}" class="btn btn-warning option">
+            <button onclick="setValuesService('{{ service.name }}', {{ service.price }}, '{{ service.description }}', `{% url 'editService' project.id service.id %}`)" class="btn btn-warning option">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#fff" class="bi bi-pencil-square"
                 viewBox="0 0 16 16">
                 <path
@@ -164,7 +171,7 @@
                 <path fill-rule="evenodd"
                   d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
               </svg>
-            </a>
+            </button>
           
             <button
               onclick="deleteConfirm('Realmente deseja deletar o serviço {{ service.name }}', `{% url 'deleteService'  project.id service.id %}` )"

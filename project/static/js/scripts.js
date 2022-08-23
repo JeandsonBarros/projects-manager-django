@@ -6,10 +6,10 @@ var html = document.querySelector('html')
 
 if (!localStorage.getItem('dark')) {
     const prefersColorScheme = window.matchMedia('(prefers-color-scheme: dark)');
-    
+
     localStorage.setItem('dark', prefersColorScheme.matches)
     check.checked = prefersColorScheme.matches
-} 
+}
 
 var isDark = JSON.parse(localStorage.getItem('dark'))
 
@@ -27,13 +27,64 @@ check.addEventListener('change', () => {
 
 /* ----------- Start script modal ---------*/
 
-function modalService(display){
-    
+function modalService(display) {
+
+    if(display == 'none') {
+        document.querySelector('#formService').reset();
+    }
+
     let divModal = document.querySelector('#divModal')
     let formService = document.querySelector('#formService')
-    
+
     divModal.style.display = display
     formService.style.display = display
+
+}
+
+function setValuesService(name, price, description, action) {
+   
+    document.querySelector('#id_name').value = name
+    document.querySelector('#id_price').value = price
+    document.querySelector('#id_description').value = description
+
+    document.querySelector('#divModal').style.display = 'block'
+
+    let form = document.querySelector('#formService')
+    form.style.display = 'block'
+    form.action = action
+
+}
+
+async function editService(event) {
+
+    event.preventDefault();
+   
+    const form = document.querySelector('#formService')
+
+    let data = new FormData(form);
+    let token = document.querySelectorAll('input')[0].value;
+
+    let fetchData = {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': token
+        },
+        body: data
+    }
+
+    try {
+
+        const response = await fetch(form.action, fetchData)
+
+        if (response.status = 200)
+            alert('Serviço editado!')
+        else
+            alert('Erro ao editar serviço!')
+
+    } catch (error) {
+        console.log(error);
+    }
+
 }
 
 /* ----------- end script modal ---------*/
@@ -97,7 +148,7 @@ async function editProject(e) {
 
         htmlAlert = htmlAlert.replace('success', 'danger')
         alert.innerHTML = htmlAlert.replace('message-here', 'Erro ao editar projeto!')
-     
+
         window.scroll({
             top: 0,
             behavior: 'smooth'
