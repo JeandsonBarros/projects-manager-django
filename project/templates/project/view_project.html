@@ -156,9 +156,10 @@
           {% load static %}
           <img src="{% static 'img/plus.svg' %}" alt="">
         </button>
+      
+{% comment %} paginatorServices(`{% url 'listServices' project.id page %}`) {% endcomment %}
 
-
-        <form action="{% url 'searchService' project.id %}" onsubmit="searchService(event)" method="get"
+        <form action="{% url 'listServices' project.id 1 %}" onsubmit="searchService(event)" method="get"
           id="searchService" class="m-3" role="search">
 
           <div class="input-group">
@@ -233,7 +234,7 @@
             {% endif %}
 
             {% for page in services.paginator.page_range %}
-              <li class="page-item"><button onclick='paginatorServices(`{% url 'listServices' project.id page %}`)' class="page-link {% if services.number == page %} bg-info {% endif %} page">1</button></li>
+              <li class="page-item"><button onclick='paginatorServices(`{% url 'listServices' project.id page %}`)' class="page-link {% if services.number == page %} bg-info {% endif %} page">{{ page }}</button></li>
             {% endfor %}
 
             {% if services.has_next %}

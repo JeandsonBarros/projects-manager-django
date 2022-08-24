@@ -38,7 +38,7 @@
         {% endfor %}
 
         {% if services|length > 0 %}
-
+ 
         <hr class="m-3">
 
          <nav aria-label="Page navigation example ">
@@ -47,17 +47,17 @@
 
             {% if services.has_previous %}
               <li class="page-item">
-                <button class="page-link page" onclick='paginatorServices(`{% url 'listServices' project.id services.previous_page_number %}`)'>&laquo;</button>
+                <button class="page-link page" onclick='paginatorServices(`{% url 'listServices' project.id services.previous_page_number %}{% if request.GET.search %}?search={{ request.GET.search }}{% endif %}`)'>&laquo;</button>
               </li>
             {% endif %}
 
             {% for page in services.paginator.page_range %}
-              <li class="page-item"><button onclick='paginatorServices(`{% url 'listServices' project.id page %}`)' class="page-link {% if services.number == page %} bg-info {% endif %} page">1</button></li>
+              <li class="page-item"><button onclick='paginatorServices(`{% url 'listServices' project.id page %}{% if request.GET.search %}?search={{ request.GET.search }}{% endif %}`)' class="page-link {% if services.number == page %} bg-info {% endif %} page">{{ page }}</button></li>
             {% endfor %}
 
             {% if services.has_next %}
               <li class="page-item">
-                <button class="page-link page" onclick='paginatorServices(`{% url 'listServices' project.id services.next_page_number %}`)' >&raquo;</button>
+                <button class="page-link page" onclick='paginatorServices(`{% url 'listServices' project.id services.next_page_number %}{% if request.GET.search %}?search={{ request.GET.search }}{% endif %}`)' >&raquo;</button>
               </li>
             {% endif %}
 

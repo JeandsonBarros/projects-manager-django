@@ -14,7 +14,7 @@ def index(request, page=1):
     if request.GET.get('search'):
         projects = Project.objects.filter(name__contains=request.GET.get('search'))
    
-    paginator = Paginator(projects, 5) # Show 10 contacts per page.
+    paginator = Paginator(projects, 10) # Show 10 contacts per page.
    
     data['projects'] = paginator.get_page(page)
 
@@ -47,7 +47,7 @@ def viewProject(request, pk):
     data['project'] = Project.objects.get(pk=pk)
     services = Service.objects.filter(project=pk)
     
-    paginator = Paginator(services, 2)
+    paginator = Paginator(services, 10)
     data['services'] = paginator.get_page(1)
 
     spentBudget = 0

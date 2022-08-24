@@ -11,12 +11,15 @@ from django.core.paginator import Paginator
 def list(request, pkProject, page=1):
 
     data = {}
-    services = Service.objects.filter(project=pkProject)
-   
-    paginator = Paginator(services, 2)
-    
-    data['services'] = paginator.get_page(page)
     data['project'] = Project.objects.get(pk=pkProject)
+    
+    services = Service.objects.filter(project=pkProject)
+    
+    if request.GET.get('search'):
+        services = Service.objects.filter(name__contains=request.GET.get('search'), project=pkProject)
+
+    paginator = Paginator(services, 10)
+    data['services'] = paginator.get_page(page)
 
     return render(request, 'service/services.html', data)
 
@@ -56,7 +59,7 @@ def save(request, pkProject):
         print('error saving')
         return redirect('projects')
 
-def search(request, pkProject):
+""" def search(request, pkProject, page=1):
     data = {}
     data['project'] = Project.objects.get(pk=pkProject)
    
@@ -65,7 +68,7 @@ def search(request, pkProject):
         return render(request, 'service/services.html', data)
     else:
         data['services'] = Service.objects.filter(project=pkProject)
-        return render(request, 'service/services.html', data)
+        return render(request, 'service/services.html', data) """
 
 
 def edit(request, pkProject, pk):
