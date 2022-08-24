@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'project',
     'main',
     'service',
-    'mathfilters'
+    'mathfilters',
+    'user'
 ]
 
 MIDDLEWARE = [
