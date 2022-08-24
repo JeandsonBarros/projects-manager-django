@@ -1,4 +1,8 @@
-{% include 'project/includes/header.html' %}
+{% if project %}
+  {% include 'project/includes/header.html'  with title='- Editar projeto'  %}
+{% else %}
+  {% include 'project/includes/header.html'  with title='- Cadastrar projeto' location='create' %}
+{% endif %}
 
 <main>
 

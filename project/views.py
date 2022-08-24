@@ -5,13 +5,18 @@ from django.http import HttpResponse
 from django.contrib import messages
 from service.forms import ServiceForm
 from service.models import Service
+from django.core.paginator import Paginator
 
-def index(request):
+def index(request, page=1):
     data = {}
-    data['projects'] = Project.objects.all()
+    projects = Project.objects.all()
 
     if request.GET.get('search'):
-        data['projects'] = Project.objects.filter(name__contains=request.GET.get('search'))
+        projects = Project.objects.filter(name__contains=request.GET.get('search'))
+   
+    paginator = Paginator(projects, 5) # Show 10 contacts per page.
+   
+    data['projects'] = paginator.get_page(page)
 
     return render(request, 'project/index.html', data)
 
@@ -40,7 +45,10 @@ def saveProject(request):
 def viewProject(request, pk):
     data = {}
     data['project'] = Project.objects.get(pk=pk)
-    data['services'] = Service.objects.filter(project=pk)
+    services = Service.objects.filter(project=pk)
+    
+    paginator = Paginator(services, 2)
+    data['services'] = paginator.get_page(1)
 
     spentBudget = 0
 

@@ -27,10 +27,11 @@ check.addEventListener('change', () => {
 
 /* ----------- Start script modal ---------*/
 
-function modalService(display) {
+function modalService(action, display) {
 
-    if(display == 'none') {
+    if (display == 'none') {
         document.querySelector('#formService').reset();
+        document.querySelector('#quantityCararacters').value = 0
     }
 
     let divModal = document.querySelector('#divModal')
@@ -38,24 +39,25 @@ function modalService(display) {
 
     divModal.style.display = display
     formService.style.display = display
+    formService.action = action
 
 }
 
 function setValuesService(name, price, description, action) {
-   
+
     document.querySelector('#id_name').value = name
     document.querySelector('#id_price').value = price
     document.querySelector('#id_description').value = description
 
-    document.querySelector('#divModal').style.display = 'block'
+    document.querySelector('#quantityCararacters').value = description.length
 
-    let form = document.querySelector('#formService')
-    form.style.display = 'block'
-    form.action = action
+    modalService(action, 'block')
 
 }
 
-async function editService(event) {
+
+
+/* async function editService(event) {
 
     event.preventDefault();
    
@@ -73,22 +75,70 @@ async function editService(event) {
     }
 
     try {
-
+        
         const response = await fetch(form.action, fetchData)
 
-        if (response.status = 200)
-            alert('Serviço editado!')
+        if (response.status = 200){
+
+            if (form.action.includes('editar'))
+                alert('Serviço editado!')
+
+            else if (form.action.includes('salvar')){
+                alert('Serviço salvo!')
+                modalService(form.action, 'none')
+            }
+
+            document.location.reload(true)
+
+        }
         else
-            alert('Erro ao editar serviço!')
+            alert('Erro ao execultar ação!')
 
     } catch (error) {
         console.log(error);
     }
 
-}
+} */
 
 /* ----------- end script modal ---------*/
 
+async function searchService(event, all = false) {
+    event.preventDefault()
+
+    const form = document.querySelector('#searchService')
+    const search = form.querySelector('#search')
+
+    try {
+
+        if (all) {
+            const response = await fetch(form.action)
+            const data = await response.text()
+            search.value = ''
+            return document.querySelector('#listServices').innerHTML = data
+        }
+
+        const response = await fetch(form.action + "?search=" + search.value)
+        const data = await response.text()
+        document.querySelector('#listServices').innerHTML = data
+
+    } catch (error) {
+        console.log(error);
+        alert('Erro ao buscar serviço.')
+    }
+
+}
+
+async function paginatorServices(path) {
+
+    try {
+        const response = await fetch(path)
+        const data = await response.text()
+        document.querySelector('#listServices').innerHTML = data
+    } catch (error) {
+        alert("Erro ao listar serviços")
+    }
+
+}
 
 function deleteConfirm(message, path) {
     if (confirm(message)) {

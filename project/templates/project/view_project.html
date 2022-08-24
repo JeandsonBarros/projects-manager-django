@@ -1,59 +1,62 @@
-{% include 'project/includes/header.html' %}
+{% include 'project/includes/header.html' with title='- Projeto: '|add:project.name %}
 
 <main>
 
   <!-- ------------- Modal start ---------------- -->
- 
-  <div id="divModal" onclick="modalService('none')"></div>
 
-  <form id="formService" onsubmit="editService(event)" action="{% url 'saveService' project.id %}" method="post"> 
+  <div id="divModal" onclick="modalService(`{% url 'saveService' project.id %}`, 'none')"></div>
 
-  {% csrf_token %}
+  <!-- onsubmit="editService(event)" -->
+  <form id="formService" action="{% url 'saveService' project.id %}" method="post">
 
-  <div class="d-flex flex-row justify-content-between">
-    <h5 class="card-title">Cadastrar serviço</h5>
-    <button type="button" onclick="modalService('none')" class="btn-close" id="closeServiceForm"
-      aria-label="Close"></button>
-  </div>
+    {% csrf_token %}
 
-  <div id="inputsService">
-
-    <div class="mt-2">
-      <label for="id_name">Nome do serviço: </label>
-      {{ serviceForm.name }}
+    <div class="d-flex flex-row justify-content-between">
+      <h5 class="card-title">Cadastrar serviço</h5>
+      <button type="button" onclick="modalService(`{% url 'saveService' project.id %}`, 'none')" class="btn-close"
+        id="closeServiceForm" aria-label="Close"></button>
     </div>
 
-    <div class="mt-2" style="width: 10rem">
-      <label for="id_price">Custo: </label>
-      {{ serviceForm.price }}
+    <div id="inputsService">
+
+      <div class="mt-2">
+        <label for="id_name">Nome do serviço: </label>
+        {{ serviceForm.name }}
+      </div>
+
+      <div class="mt-2" style="width: 10rem">
+        <label for="id_price">Custo: </label>
+        {{ serviceForm.price }}
+      </div>
+
+      <div class="mt-2" oninput="quantityCararacters.value=id_description.value.length">
+        <label for="id_description">Descrição: </label>
+        {{ serviceForm.description}}
+        <small>
+          <output id="quantityCararacters">{{ serviceForm.description.value|length }}</output>/200
+        </small>
+      </div>
+
+      <input class="btn btn-info mt-5" type="submit" value="Salvar">
+      <input class="btn btn-danger mt-5" type="button"
+        onclick="modalService(`{% url 'saveService' project.id %}`, 'none')" value="Cancelar">
+
     </div>
-
-    <div class="mt-2">
-      <label for="id_description">Descrição: </label>
-      {{ serviceForm.description}}
-    </div>
-
-    <input class="btn btn-info mt-5" type="submit" value="Salvar">
-    <input class="btn btn-danger mt-5" type="button" onclick="modalService('none')" value="Cancelar">
-
-  </div>
-</form>
-
-
+  </form>
 
   <!-- ------------- Modal end ---------------- -->
 
   <div class="container mt-5">
 
-    
+
     {% if messages %}
-      {% for message in messages %}
-      <div id="alert" class="alert {% if message.tags %}{{ message.tags }}{% endif %} alert-dismissible fade show "
-        role="alert">
-        <span> {{ message }} </span>
-        <button type="button" class="btn-close" onclick="hidenAlert()"></button>
-      </div>
-      {% endfor %}
+    {% for message in messages %}
+    <div id="alert" class="alert {% if message.tags %}{{ message.tags }}{% endif %} alert-dismissible fade show "
+      role="alert">
+      <span> {{ message }} </span>
+      <button type="button" class="btn-close" onclick="hidenAlert()"></button>
+    </div>
+    {% endfor %}
     {% endif %}
 
     <div class="cardProject mt-3">
@@ -66,11 +69,11 @@
         <span class="card-text">
           Orçamento:
           {% if project.budget %}
-            R$ {{ project.budget }} | 
-            Gasto: R$ {{ spentBudget }} |
-            Disponível: R$ {{ project.budget|sub:spentBudget }}
+          R$ {{ project.budget }} |
+          Gasto: R$ {{ spentBudget }} |
+          Disponível: R$ {{ project.budget|sub:spentBudget }}
           {% else %}
-            Não definido
+          Não definido
           {% endif %}
         </span> <br>
 
@@ -120,8 +123,10 @@
                 d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
             </svg>
           </a>
-        
-          <button onclick="deleteConfirm( 'Realmente deseja deletar o projeto {{ project.name }}' , `{% url 'deleteProject' project.id %}`)" class="btn btn-danger option">
+
+          <button
+            onclick="deleteConfirm( 'Realmente deseja deletar o projeto {{ project.name }}' , `{% url 'deleteProject' project.id %}`)"
+            class="btn btn-danger option">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#fff" class="bi bi-trash3-fill"
               viewBox="0 0 16 16">
               <path
@@ -134,17 +139,41 @@
       </div>
     </div>
 
-
-
     <div class="cardProject mt-3">
 
-      <h5 class="card-title ms-3">Serviços</h5>
-
-      <button class="btn btn-info text-light m-3" onclick="modalService('block')">
-        Adicionar serviço
+      <button class="btn btn-light ms-3 d-flex flex-row flex-nowrap align-items-center"
+        onclick="searchService(event, true)" title="Atualizar">
+        <h5 class="card-title">Serviços</h5>
         {% load static %}
-        <img src="{% static 'img/plus.svg' %}" alt="">
+        <img class="ms-1" src="{% static 'img/arrow-repeat.svg' %}" alt="">
       </button>
+
+      <div class="d-flex flex-row flex-wrap justify-content-between">
+
+        <button class="btn btn-info text-light m-3"
+          onclick="modalService( `{% url 'saveService' project.id %}`, 'block')">
+          Adicionar serviço
+          {% load static %}
+          <img src="{% static 'img/plus.svg' %}" alt="">
+        </button>
+
+
+        <form action="{% url 'searchService' project.id %}" onsubmit="searchService(event)" method="get"
+          id="searchService" class="m-3" role="search">
+
+          <div class="input-group">
+            <span class="input-group-text bg-info border-0" id="basic-addon1">
+              {% load static %}
+              <img src="{% static 'img/search.svg' %}" alt="">
+            </span>
+            <input type="search" name='search' id='search' class="form-control" placeholder="Buscar serviço"
+              aria-label="Search" aria-describedby="basic-addon1">
+          </div>
+
+        </form>
+
+
+      </div>
 
       <div>
         {% if services|length == 0 %}
@@ -152,18 +181,19 @@
         {% endif %}
       </div>
 
-
-      <div>
+      <div id="listServices">
         {% for service in services %}
         <div class="m-3 rounded-3 shadow p-3">
+
           <h6 class="card-title mb-2">{{ service.name }}</h6>
-          <h6 class="card-title mb-2">{{ service.id }}</h6>
           <p>Custo: R$ {{ service.price }}</p>
           <p class="text-muted mb-3">Descrição: {{ service.description }}</p>
 
           <div>
 
-            <button onclick="setValuesService('{{ service.name }}', {{ service.price }}, '{{ service.description }}', `{% url 'editService' project.id service.id %}`)" class="btn btn-warning option">
+            <button
+              onclick="setValuesService('{{ service.name }}', {{ service.price }}, '{{ service.description }}', `{% url 'editService' project.id service.id %}`)"
+              class="btn btn-warning option">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#fff" class="bi bi-pencil-square"
                 viewBox="0 0 16 16">
                 <path
@@ -172,7 +202,7 @@
                   d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
               </svg>
             </button>
-          
+
             <button
               onclick="deleteConfirm('Realmente deseja deletar o serviço {{ service.name }}', `{% url 'deleteService'  project.id service.id %}` )"
               href="{% url 'deleteService' project.id service.id %}" class="btn btn-danger option">
@@ -187,19 +217,44 @@
 
         </div>
         {% endfor %}
-      </div>
 
+        {% if services|length > 0 %}
+
+        <hr class="m-3">
+
+        <nav aria-label="Page navigation example ">
+
+          <ul class="pagination justify-content-center ">
+
+            {% if services.has_previous %}
+              <li class="page-item">
+                <button class="page-link page" onclick='paginatorServices(`{% url 'listServices' project.id services.previous_page_number %}`)'>&laquo;</button>
+              </li>
+            {% endif %}
+
+            {% for page in services.paginator.page_range %}
+              <li class="page-item"><button onclick='paginatorServices(`{% url 'listServices' project.id page %}`)' class="page-link {% if services.number == page %} bg-info {% endif %} page">1</button></li>
+            {% endfor %}
+
+            {% if services.has_next %}
+              <li class="page-item">
+                <button class="page-link page" onclick='paginatorServices(`{% url 'listServices' project.id services.next_page_number %}`)' >&raquo;</button>
+              </li>
+            {% endif %}
+
+          </ul>
+
+        </nav>
+
+        {% endif %}
+
+      </div>
 
     </div>
 
   </div>
 
-
-
-
-
-
-
 </main>
+
 
 {% include 'project/includes/footer.html' %}

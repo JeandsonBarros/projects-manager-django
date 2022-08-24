@@ -189,6 +189,11 @@ main {
    
 }
 
+.page{
+    background-color: var(--background);
+    color: var(--color);
+}
+
 footer>span>a {
     text-decoration: none;
 }
