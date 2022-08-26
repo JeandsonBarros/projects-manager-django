@@ -1,3 +1,16 @@
-body {
-    background: aqua;
+form {
+    max-width: 400px;  
+    margin: auto;
 }
+
+h1 {
+    text-align: center;
+}
+
+#personCicle{
+    margin: auto;
+    background-color: #424242;
+    border-radius: 50%;
+    border: 1px solid #424242;
+}
+ 

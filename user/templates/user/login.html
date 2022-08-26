@@ -1,67 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
+{% load static %}
+{% include 'user/includes/header.html' with title="- Login" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<main>
 
-    <title>Login</title>
+    <form class="mt-5" action="" method="post">
+        <div class="card d-flex flex-column justify-content-center">
 
-    <style>
-        body, main {
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            background-image: linear-gradient(110.9deg, rgba(44, 221, 239, 1) 1.1%, rgba(14, 191, 210, 1) 37.6%, rgba(8, 127, 140, 1) 99.2%);
-        }
+            <img id="personCicle" src="{% static 'user/img/person-circle.svg' %}" width="70" alt="">
 
-        form {
+            <h1>Login</h1>
 
-            border-radius: 10px;
-            background-color: #fff;
-            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.274);
-            max-width: 500px;
-            height: 500px;
-            margin: auto;
-            vertical-align: auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
+            <div>
+                <label for="email">E-mail</label>
+                <input id="email" class="form-control" type="email">
+            </div>
 
-           
-        }
-    </style>
+            <div class="mt-2">
+                <label for="password">Senha</label>
+                <input class="form-control" id="password" type="password">
+            </div>
 
-</head>
+            <div style="margin: auto; display: flex; flex-direction: column; justify-content: center; width: 130px;">
+                <input class="btn btn-info mt-3" type="submit" value="Entrar">
+                <a class="btn btn-info mt-1" href="{% url 'register' %}">Cadastrar-se</a>
+            </div>
 
-<body>
-
-    <main>
-
-        <div style="margin-top: 100px;">
-            <form action="">
-                <h1>Login</h1>
-
-                <div>
-                    <label for="email">E-mail: </label>
-                    <input type="email" id="email" placeholder="Email address" required>
-                </div>
-                <p></p>
-                <div>
-                    <label for="password">Senha: </label>
-                    <input type="password" id="password" placeholder="Password" required>
-                </div>
-
-                <input type="submit" value="Entrar">
-                <a href="#"> Cadastrar-se </a>
-            </form>
         </div>
+    </form>
 
-    </main>
+</main>
 
-
-</body>
-
-</html>
+{% include 'user/includes/footer.html' %}

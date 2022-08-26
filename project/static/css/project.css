@@ -1,0 +1,50 @@
+.option:hover {
+    filter: drop-shadow(1px 1px 6px rgba(100, 100, 100, 0.5));
+}
+
+.option svg {
+    filter: drop-shadow(2px 2px 2px rgba(100, 100, 100, 0.5));
+}
+
+.form-control {
+    background-color: var(--backgroundInput);
+    color: var(--color);
+}
+
+.form-control:focus {
+    color: var(--color);
+    background-color: var(--backgroundInput);
+}
+
+.labelForm::before {
+    color: red;
+    content: "*";
+}
+
+#divModal {
+    display: none;
+    position: fixed;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.425);
+}
+
+#formService {
+    display: none;
+    z-index: 3;
+    border: 1px solid rgb(0, 183, 207);
+   
+    background-color: var(--background);
+    padding: 10px;
+    border-radius: 10px;
+    
+    position: fixed;
+    top: 10px;
+    max-width: 500px;
+    margin: 5% auto;
+    left: 0;
+    right: 0;
+   
+}
