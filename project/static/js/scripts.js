@@ -163,7 +163,7 @@ async function editProject(e) {
         body: data
     }
 
-    var htmlAlert = '<div class="alert alert-success alert-dismissible fade show " role="alert">' +
+    var htmlAlert = '<div class="alert success alert-dismissible fade show " role="alert">' +
         '<span> message-here </span>' +
         '<button type="button" class="btn-close" onclick="hidenAlert()"</button>' +
         '</div>';
@@ -184,7 +184,7 @@ async function editProject(e) {
             alert.innerHTML = htmlAlert.replace('message-here', 'Projeto editado com sucesso!')
 
         } else {
-            htmlAlert = htmlAlert.replace('success', 'danger')
+            htmlAlert = htmlAlert.replace('success', 'error')
             alert.innerHTML = htmlAlert.replace('message-here', 'Erro ao editar projeto!')
 
             window.scroll({
@@ -196,7 +196,7 @@ async function editProject(e) {
     } catch (error) {
         console.log(error)
 
-        htmlAlert = htmlAlert.replace('success', 'danger')
+        htmlAlert = htmlAlert.replace('success', 'error')
         alert.innerHTML = htmlAlert.replace('message-here', 'Erro ao editar projeto!')
 
         window.scroll({
@@ -207,11 +207,18 @@ async function editProject(e) {
 
 }
 
+function formSearchMobile(){
+    const searchMobile = document.querySelector('#formSearchMobile')
+
+    searchMobile.style.display = searchMobile.style.display=='block' ? 'none' : 'block'
+    
+}
+
 function hidenAlert() {
     document.getElementById("alert").style.display = "none";
 }
 
 function menu() {
-    const menuButton = document.getElementById("menu")
+    const menuButton = document.getElementById("options")
     menuButton.style.display = menuButton.style.display == "block" ? 'none' : 'block';
 }

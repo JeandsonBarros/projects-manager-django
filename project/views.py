@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from project.forms import ProjectForm
 from project.models import Project
 from django.http import HttpResponse
@@ -9,10 +9,10 @@ from django.core.paginator import Paginator
 
 def index(request, page=1):
     data = {}
-    projects = Project.objects.all()
+    projects = Project.objects.filter(user=request.user)
 
     if request.GET.get('search'):
-        projects = Project.objects.filter(name__contains=request.GET.get('search'))
+        projects = Project.objects.filter(name__contains=request.GET.get('search'), user=request.user)
    
     paginator = Paginator(projects, 10) # Show 10 contacts per page.
    
@@ -32,7 +32,9 @@ def saveProject(request):
 
         if form.is_valid():
             try:
-                form.save()
+                project = form.save(commit=False)
+                project.user = request.user
+                project.save()
                 messages.success(request, "Projeto salvo!")
                 return redirect('projects')
 
@@ -40,11 +42,15 @@ def saveProject(request):
                 print(NameError)
                 messages.error(request, "Erro ao salvar o projeto!")
                 return redirect('projects')
-            
+        else:
+            messages.error(request, "Erro ao salvar o projeto, dados invalidos!")
+            return redirect('projects')
+
             
 def viewProject(request, pk):
     data = {}
-    data['project'] = Project.objects.get(pk=pk)
+    #data['project'] = Project.objects.get(pk=pk, user=request.user)
+    data['project'] = get_object_or_404(Project, pk=pk, user=request.user)
     services = Service.objects.filter(project=pk)
     
     paginator = Paginator(services, 10)
@@ -63,30 +69,35 @@ def viewProject(request, pk):
 
 def editProject(request, pk):  
     data = {}
-    data['project'] = Project.objects.get(pk=pk)
-
-    if request.method == 'GET':
-        data['form'] = ProjectForm(instance=data['project'])
-        return render(request, 'project/form_project.html', data)
-
-    elif request.method == 'POST':
+    data['project'] = get_object_or_404(Project, pk=pk, user=request.user)
+    data['form'] = ProjectForm(instance=data['project'])
+    
+    if request.method == 'POST':
         form = ProjectForm(request.POST or None, instance=data['project'])
 
         if form.is_valid():
             try:
-                form.save()
+                data['project'] = form.save()
             except NameError:
                 print(NameError)
-
-            data['project'] = Project.objects.get(pk=pk)            
+         
             data['form'] = ProjectForm(instance=data['project'])
 
             return render(request, 'project/form_project.html', data)
+        else:
+            return render(request, 'project/form_project.html', data)
+
+    return render(request, 'project/form_project.html', data)
 
 
 def delete(request, pk):
-    project = Project.objects.get(pk=pk)
-    project.delete()
-    messages.success(request, f"Projeto {project.name} deletado!")
+    project = Project.objects.get(pk=pk, user=request.user)
+
+    try:
+        project.delete()
+        messages.success(request, f"Projeto {project.name} deletado!")
+    except NameError:
+        messages.error(request, f"Erro ao deletar o projeto '{project.name}'!")
+
     return redirect('projects')
 

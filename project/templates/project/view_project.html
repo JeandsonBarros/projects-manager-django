@@ -51,7 +51,7 @@
 
     {% if messages %}
     {% for message in messages %}
-    <div id="alert" class="alert {% if message.tags %}{{ message.tags }}{% endif %} alert-dismissible fade show "
+    <div id="alert" class="alert {% if message.tags %}{{ message.tags }}{% endif %} alert-dismissible fade show mb-5"
       role="alert">
       <span> {{ message }} </span>
       <button type="button" class="btn-close" onclick="hidenAlert()"></button>
@@ -139,7 +139,7 @@
       </div>
     </div>
 
-    <div class="card mt-3">
+    <div class="card mt-5">
 
       <button class="btn btn-light ms-3 d-flex flex-row flex-nowrap align-items-center"
         onclick="searchService(event, true)" title="Atualizar">

@@ -11,12 +11,12 @@ from django.core.paginator import Paginator
 def list(request, pkProject, page=1):
 
     data = {}
-    data['project'] = Project.objects.get(pk=pkProject)
-    
-    services = Service.objects.filter(project=pkProject)
+    data['project'] = get_object_or_404(Project, pk=pkProject, user=request.user)
+   
+    services = Service.objects.filter(project=data['project'].pk)
     
     if request.GET.get('search'):
-        services = Service.objects.filter(name__contains=request.GET.get('search'), project=pkProject)
+        services = Service.objects.filter(name__contains=request.GET.get('search'), project=data['project'].pk)
 
     paginator = Paginator(services, 10)
     data['services'] = paginator.get_page(page)
@@ -25,10 +25,11 @@ def list(request, pkProject, page=1):
 
 
 def save(request, pkProject):
+
     form = ServiceForm(request.POST or None) 
    
     if form.is_valid():
-        project = Project.objects.get(pk=pkProject)
+        project = Project.objects.get(pk=pkProject, user=request.user)
 
         if project.budget is None:
             messages.error(request, "É necessário definir um orçamento para o projeto para salvar um serviço.")
@@ -59,29 +60,18 @@ def save(request, pkProject):
         print('error saving')
         return redirect('projects')
 
-""" def search(request, pkProject, page=1):
-    data = {}
-    data['project'] = Project.objects.get(pk=pkProject)
-   
-    if request.GET.get('search'):
-        data['services'] = Service.objects.filter(name__contains=request.GET.get('search'), project=pkProject)
-        return render(request, 'service/services.html', data)
-    else:
-        data['services'] = Service.objects.filter(project=pkProject)
-        return render(request, 'service/services.html', data) """
-
-
 def edit(request, pkProject, pk):
 
-    service = Service.objects.get(pk=pk)
+    project = get_object_or_404(Project, pk=pkProject, user=request.user)
+    service = Service.objects.get(pk=pk, project=project)
     form = ServiceForm(request.POST or None, instance=service)
 
     if form.is_valid():
         try:
            serviceUpdate = form.save(commit=False)
-           serviceUpdate.project = Project.objects.get(pk=pkProject)
+           serviceUpdate.project = project
 
-           services = Service.objects.filter(project=pkProject)
+           services = Service.objects.filter(project=project)
            spentBudget = serviceUpdate.price or 0
 
            for serviceBudget in services:
@@ -104,7 +94,8 @@ def edit(request, pkProject, pk):
     return redirect(reverse('viewProject', args=[pkProject]))
 
 def delete(request, pkProject, pk):
-    service = get_object_or_404(Service, pk=pk)
+    project = get_object_or_404(Project, pk=pkProject, user=request.user)
+    service = Service.objects.get(pk=pk, project=project)
 
     try:
         service.delete()

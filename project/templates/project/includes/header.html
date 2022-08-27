@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -8,7 +9,6 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous" />
 
-  {% load static %}
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <link rel="stylesheet" href="{% static 'project/css/project.css' %}">
   <link rel="icon" href="{% static 'img/gear-fill.svg' %}" />
@@ -25,8 +25,8 @@
       <div class="d-flex flex-wrap align-items-center justify-content-between">
 
         <a href="/" class="d-flex align-items-center text-white text-decoration-none">
-          {% load static %}
-          <img src="{% static 'img/logo.svg' %}" style="filter: drop-shadow(2px 2px 3px #fff);" width="50" alt="Jeandson Barros">
+          <img src="{% static 'img/logo.svg' %}" style="filter: drop-shadow(2px 2px 3px #fff);" width="50"
+            alt="Jeandson Barros">
           <h2 class="logo text-white"> JProjects </h2>
         </a>
 
@@ -35,16 +35,29 @@
         {{ request.get_full_path }} {% endcomment %}
 
         <div id="rigthHeader">
-          <div class="d-flex flex-row ">
+          <div class="d-flex flex-row align-items-center">
+
+            <span class="me-1 text-white"> {{ request.user }} </span>
 
             <div class="text-end">
-              <a href="{% url 'logoutView' %}" type="button" class="btn btn-danger me-2">Sair</a>
+              <a href="{% url 'logoutView' %}" type="button" class="link-danger me-2">Sair</a>
             </div>
           </div>
 
         </div>
 
-        <button class="btn btn-outline-info" id="menuButton" onclick="menu()">
+      </div>
+    </div>
+
+  </header>
+
+  <nav id="navBar">
+
+    <div id="menuMobile">
+
+      <div class="d-flex flex-row align-items-center justify-content-between">
+
+        <button class="btn btn-outline-info border-0" id="menuButton" onclick="menu()">
           <svg xmlns="http://www.w3.org/2000/svg" width="26" height="36" fill="#fff" class="bi bi-list"
             viewBox="0 0 16 16">
             <path fill-rule="evenodd"
@@ -52,49 +65,98 @@
           </svg>
         </button>
 
-      </div>
-    </div>
+        <div id="rigthNav" class="d-flex flex-row align-items-center me-3">
 
-  </header>
+          <button class="btn btn-outline-info border-0 me-3" onclick="formSearchMobile()">
+            <img src="{% static 'img/search.svg' %}" alt="">
+          </button>
 
-  <nav id="menu">
-    <div class="ps-5 pe-5 p-2 d-flex flex-row flex-wrap justify-content-between">
-
-      <ul class="nav col-12 col-lg-auto me-lg-auto">
-
-        <li>
-          <a href="{% url 'projects' %}"
-            class="nav-link px-2 me-2 btn  {% if location == 'home' %}  btn-info text-white {% else %} text-white {% endif %}">Home</a>
-        </li>
-        <li>
-          <a href="{% url 'createProject' %}"
-            class="nav-link px-2 btn {% if location == 'create' %} btn-info text-white {% else %} text-white  {% endif %}">Novo
-            projeto</a>
-        </li>
-
-      </ul>
-
-      <div class="d-flex flex-row flex-wrap align-items-center">
-
-        <form action="{% url 'projects' %}" method="get" id="formSearch" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3"
-          role="search">
-
-          <div class="input-group">
-            <span class="input-group-text bg-info border-0" id="basic-addon1">
-              {% load static %}
-              <img src="{% static 'img/search.svg' %}" alt="">
-            </span>
-            <input type="search" name='search' id='search' value="{% if request.GET.search %}{{ request.GET.search }}{% endif %}" class="form-control" placeholder="Buscar projeto"
-              aria-label="Search" aria-describedby="basic-addon1">
-          </div>
-
-        </form>
-
-        <div class="divTrigger d-flex align-items-center rounded-pill p-1 shadow-sm">
-          <input id="trigger" type="checkbox">
-          <label for="trigger" class="checker"></label>
         </div>
+
+      </div>
+
+
+      <form action="{% url 'projects' %}" method="get" id="formSearchMobile"
+        class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3 " role="search">
+
+        <div class="input-group">
+          <span class="input-group-text bg-info border-0 rounded-0" id="basic-addon1">
+            <img src="{% static 'img/search.svg' %}" alt="">
+          </span>
+          <input type="search" name='search' id='search'
+            value="{% if request.GET.search %}{{ request.GET.search }}{% endif %}"
+            class="form-control border-0 rounded-0" placeholder="Buscar projeto" aria-label="Search"
+            aria-describedby="basic-addon1">
+        </div>
+
+      </form>
+
+      <div id="options" class="shadow">
+
+        <div class="d-flex flex-column "">
+
+          <a href="{% url 'projects' %}" class="p-2 {% if location == 'home' %} active {% endif %}" aria-current="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="#fff" class="bi bi-house-door-fill" viewBox="0 0 16 16">
+              <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"/>
+            </svg>
+             Home
+          </a>
+
+          <a href="{% url 'createProject' %}" class="p-2 {% if location == 'create' %} active {% endif %}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="#fff" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+            </svg> 
+            Novo projeto
+          </a>
+        </div>
+
       </div>
 
     </div>
+
+    <div id="menuDesktop">
+      <div class="ps-5 pe-5 p-2 d-flex flex-row flex-wrap justify-content-between">
+
+        <ul class="nav col-12 col-lg-auto me-lg-auto">
+
+          <li>
+            <a href="{% url 'projects' %}"
+              class="nav-link px-2 me-2 btn  {% if location == 'home' %}  btn-info text-white {% else %} text-white {% endif %}">Home</a>
+          </li>
+
+          <li>
+            <a href="{% url 'createProject' %}"
+              class="nav-link px-2 btn {% if location == 'create' %} btn-info text-white {% else %} text-white  {% endif %}">Novo
+              projeto</a>
+          </li>
+
+        </ul>
+
+        <div class="d-flex flex-row flex-wrap align-items-center">
+
+          <form action="{% url 'projects' %}" method="get" id="formSearch"
+            class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+
+            <div class="input-group">
+              <span class="input-group-text bg-info border-0" id="basic-addon1">
+                <img src="{% static 'img/search.svg' %}" alt="">
+              </span>
+              <input type="search" name='search' id='search'
+                value="{% if request.GET.search %}{{ request.GET.search }}{% endif %}" class="form-control"
+                placeholder="Buscar projeto" aria-label="Search" aria-describedby="basic-addon1">
+            </div>
+
+          </form>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="divTrigger d-flex align-items-center rounded-pill p-1 shadow-sm">
+      <input id="trigger" type="checkbox">
+      <label for="trigger" class="checker"></label>
+    </div>
+
   </nav>

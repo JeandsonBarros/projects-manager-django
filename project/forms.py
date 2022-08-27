@@ -11,7 +11,7 @@ STATUS_CHOICES = [
 class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
-        fields = '__all__'
+        fields = ['name', 'description', 'manager', 'status', 'budget', 'deadline']
 
         widgets = {
             'name': forms.TextInput(attrs={
