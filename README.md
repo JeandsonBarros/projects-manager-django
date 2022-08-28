@@ -9,6 +9,6 @@
 `pip freeze > requirements.txt`
 `pip install -r requirements.txt`
 
-![alt text](./1.png)
+![alt text](./1.gif)
 
 
