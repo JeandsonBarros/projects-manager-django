@@ -10,5 +10,7 @@
 `pip install -r requirements.txt`
 
 ![alt text](./1.gif)
+![Alt Text](./1.gif)
+![Alt Text](https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif)
 
 
