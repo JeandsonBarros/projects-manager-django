@@ -30,32 +30,32 @@
         {% csrf_token %}
 
         <div class="form-group ">
-          <label for="id_name" class="labelForm">Nome:</label>
+          <label for="id_name" class="labelForm">Nome</label>
           {{ form.name }}
         </div>
 
         <div class="form-group mt-3">
-          <label for="id_manager" class="labelForm">Gerente:</label>
+          <label for="id_manager" class="labelForm">Gerente</label>
           {{ form.manager }}
         </div>
 
         <div class="form-group mt-3" style="width: 250px;">
-          <label for="id_status" >Status:</label>
+          <label for="id_status" >Status</label>
           {{ form.status }}
         </div>
 
         <div class="form-group mt-3" style="width: 250px;">
-          <label for="id_budget" >Orçamento: </label>
+          <label for="id_budget" >Orçamento</label>
           {{ form.budget }}
         </div>
 
         <div class="form-group mt-3" style="width: 150px;">
-          <label for="id_deadline" class="labelForm">Prazo: </label>
+          <label for="id_deadline" class="labelForm">Prazo</label>
           {{ form.deadline }}
         </div>
 
         <div class="form-group mt-3" oninput="result.value=id_description.value.length">
-          <label for="id_description" class="labelForm">Descrição: </label>
+          <label for="id_description" class="labelForm">Descrição</label>
           {{ form.description }}
           <small>
             <output id="result">{{ form.description.value|length }}</output>/200

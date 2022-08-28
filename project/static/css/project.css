@@ -16,10 +16,6 @@
     background-color: var(--backgroundInput);
 }
 
-.labelForm::before {
-    color: red;
-    content: "*";
-}
 
 #divModal {
     display: none;
@@ -41,7 +37,7 @@
     border-radius: 10px;
     
     position: fixed;
-    top: 10px;
+    top: 0;
     max-width: 500px;
     margin: 5% auto;
     left: 0;

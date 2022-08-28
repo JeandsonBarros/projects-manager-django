@@ -20,17 +20,17 @@
     <div id="inputsService">
 
       <div class="mt-2">
-        <label for="id_name">Nome do serviço: </label>
+        <label class="labelForm" for="id_name">Nome do serviço</label>
         {{ serviceForm.name }}
       </div>
 
       <div class="mt-2" style="width: 10rem">
-        <label for="id_price">Custo: </label>
+        <label class="labelForm" for="id_price">Custo</label>
         {{ serviceForm.price }}
       </div>
 
       <div class="mt-2" oninput="quantityCararacters.value=id_description.value.length">
-        <label for="id_description">Descrição: </label>
+        <label class="labelForm" for="id_description">Descrição</label>
         {{ serviceForm.description}}
         <small>
           <output id="quantityCararacters">{{ serviceForm.description.value|length }}</output>/200

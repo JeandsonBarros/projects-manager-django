@@ -45,3 +45,27 @@ def logoutView(request):
     logout(request)
     return redirect('home')
 
+def userData(request):
+    data = {}
+    data['form'] = NewUserForm(instance=request.user)
+
+    if request.method == "POST":
+        form = NewUserForm(request.POST or None, instance=request.user)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect("userData")
+        else:
+            messages.error(request, "Alteração de dados sem sucesso. Informações inválidas.")
+            return redirect("userData")
+
+    return render(request, 'user/user_data.html', data)
+
+def removeUser(request):
+
+    try:
+        request.user.delete()
+    except NameError:
+        messages.error(request, "Error:" + NameError)
+
+    return redirect("loginView")

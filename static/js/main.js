@@ -23,3 +23,18 @@ check.addEventListener('change', () => {
 })
 
 /* ---------- End script dark theme ------------ */
+
+function hidenAlert() {
+    document.getElementById("alert").style.display = "none";
+}
+
+function genericModal(id){
+    const element = document.getElementById(id)
+    element.style.display = element.style.display == "flex" ? 'none' : 'flex';
+}
+
+function deleteConfirm(message, path) {
+    if (confirm(message)) {
+        window.location.href = `${location.origin}${path}`
+    }
+}
