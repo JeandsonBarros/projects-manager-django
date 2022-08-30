@@ -18,32 +18,53 @@
 
 <body>
 
-    
-
-        <div >
-            <img src="{% static 'img/logo.svg' %}" width="100" alt="" >
-            <h1>Project manager</h1>
+    <header class="d-flex justify-content-between p-3" style="background: transparent;">
+        <div></div>
+        <div class="divTrigger d-flex align-items-center rounded-pill p-1 shadow-sm me-3">
+            <input id="trigger" type="checkbox">
+            <label for="trigger" class="checker"></label>
         </div>
+    </header>
 
+    <main>
 
-        <!--Waves Container-->
-        <!-- <div>
-            <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
-                <defs>
-                    <path id="gentle-wave"
-                        d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
-                </defs>
-                <g class="parallax">
-                    <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7" />
-                    <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
-                    <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
-                    <use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
-                </g>
-            </svg>
-        </div> -->
-        <!--Waves end-->
+        <section>
+            <div class="center d-flex flex-column justify-content-center align-items-center">
 
-    
+                <div class="d-flex justify-content-center flex-column  align-items-center mb-5">
+                    <img src="{% static 'img/logo.svg' %}" class="logo" width="120" alt="">
+                    <div style="text-align: center;">
+                        <h1>Project Manager</h1>
+                        <p>Gerenciamento de projetos simples e fácil.</p>
+                    </div>
+                </div>
 
-<!-- {% include 'project/includes/footer.html' %} -->
+                <div class="mt-1">
+                    <a class="btn btn-dark shadow" href="{% url 'loginView' %}">Entrar</a>
+                    <a class="btn btn-dark shadow" href="{% url 'register' %}">Cadastrar-se</a>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+
+            <div class="m-5 d-flex flex-row align-items-center">
+
+                <p style="font-size: 2rem;">
+                    Gerencie projetos de maneira fácil e rápida, defina orçamentos e prazos e administre servições de
+                    que
+                    seus projetos necessitam.
+                </p>
+
+                <!-- <img id="print1" src="{% static 'img/captura1.webp' %}" alt=""> -->
+
+            </div>
+
+            <hr class="m-3">
+
+        </section>
+
+    </main>
+
+    {% include 'project/includes/footer.html' %}

@@ -54,6 +54,7 @@ def userData(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
+            messages.success(request, "Alteração de dados feita com sucesso.")
             return redirect("userData")
         else:
             messages.error(request, "Alteração de dados sem sucesso. Informações inválidas.")

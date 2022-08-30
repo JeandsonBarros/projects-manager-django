@@ -31,22 +31,10 @@
           <h2 class="logo text-white"> JProjects </h2>
         </a>
 
-        {% comment %} {{ request.path }}
-
-        {{ request.get_full_path }} {% endcomment %}
-
         <div id="rigthHeader">
 
           <div class="d-flex flex-row align-items-center">
-            <div class="text-end me-3">
-              <a type="button" href="{% url 'loginView' %}" class="btn btn-outline-light me-2">Login</a>
-              <a type="button" href="{% url 'register' %}" class="btn btn-warning">Sign-up</a>
-            </div>
-
-            <div class="divTrigger d-flex align-items-center rounded-pill p-1 shadow-sm">
-              <input id="trigger" type="checkbox">
-              <label for="trigger" class="checker"></label>
-            </div>
+           
 
           </div>
 
