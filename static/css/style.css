@@ -21,6 +21,10 @@
     padding: 0;
 }
 
+html {
+    height: 100%;
+}
+
 body {
     background: var(--background);
     height: 100%;

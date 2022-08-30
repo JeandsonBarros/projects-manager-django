@@ -134,6 +134,7 @@ STATICFILES_DIRS = [
    os.path.join(BASE_DIR, 'static'),
    ('project', 'project/static/'),
    ('user', 'user/static/'),
+   ('main', 'main/static/'),
 ]
 
 # Default primary key field type
