@@ -156,8 +156,6 @@
           {% load static %}
           <img src="{% static 'img/plus.svg' %}" class="bg-light rounded-pill" width="30" alt="">
         </button>
-      
-{% comment %} paginatorServices(`{% url 'listServices' project.id page %}`) {% endcomment %}
 
         <form action="{% url 'listServices' project.id 1 %}" onsubmit="searchService(event)" method="get"
           id="searchService" class="m-3" role="search">
@@ -172,7 +170,6 @@
           </div>
 
         </form>
-
 
       </div>
 
@@ -258,4 +255,4 @@
 </main>
 
 
-{% include 'project/includes/footer.html' %}
+{% include 'includes/footer.html' %}

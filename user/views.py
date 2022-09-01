@@ -39,7 +39,7 @@ def register(request):
             messages.error(request, "Registro sem sucesso. Informações inválidas.")
             return redirect("register")
     else:        
-        return render(request, 'user/register.html', {'form': NewUserForm()})
+        return render(request, 'user/form_user.html', {'form': NewUserForm()})
 
 def logoutView(request):
     logout(request)
@@ -60,7 +60,7 @@ def userData(request):
             messages.error(request, "Alteração de dados sem sucesso. Informações inválidas.")
             return redirect("userData")
 
-    return render(request, 'user/user_data.html', data)
+    return render(request, 'user/form_user.html', data)
 
 def removeUser(request):
 
