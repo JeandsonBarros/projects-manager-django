@@ -154,7 +154,7 @@
           onclick="modalService( `{% url 'saveService' project.id %}`, 'block')">
           Adicionar serviço
           {% load static %}
-          <img src="{% static 'img/plus.svg' %}" alt="">
+          <img src="{% static 'img/plus.svg' %}" class="bg-light rounded-pill" width="30" alt="">
         </button>
       
 {% comment %} paginatorServices(`{% url 'listServices' project.id page %}`) {% endcomment %}

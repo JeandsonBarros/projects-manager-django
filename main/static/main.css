@@ -13,7 +13,7 @@ h1{
   font-family: 'Times New Roman', Times, serif ;
 }
 
-.logo{
+.logoImg{
   background-color: #16bbd1;
   border-radius: 50%;
   padding: 10px;
@@ -21,8 +21,3 @@ h1{
   width: 100px;
  
 }
-
-#print1{
-  max-width: 600px;
-}
-

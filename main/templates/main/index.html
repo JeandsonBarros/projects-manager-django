@@ -32,16 +32,17 @@
             <div class="center d-flex flex-column justify-content-center align-items-center">
 
                 <div class="d-flex justify-content-center flex-column  align-items-center mb-5">
-                    <img src="{% static 'img/logo.svg' %}" class="logo" width="120" alt="">
+                    <img src="{% static 'img/logo.svg' %}" class="logoImg" width="120" alt="">
+                   
                     <div style="text-align: center;">
                         <h1>Project Manager</h1>
                         <p>Gerenciamento de projetos simples e fácil.</p>
                     </div>
                 </div>
 
-                <div class="mt-1">
+                <div class="mt-1 d-flex flex-column justify-content-center align-items-center">
                     <a class="btn btn-dark shadow" href="{% url 'loginView' %}">Entrar</a>
-                    <a class="btn btn-dark shadow" href="{% url 'register' %}">Cadastrar-se</a>
+                    <a class="btn btn-dark shadow m-3" href="{% url 'register' %}">Cadastrar-se</a>
                 </div>
 
             </div>
@@ -50,18 +51,18 @@
 
         </section>
 
-        <section>
+        <section class="m-2">
 
-            <div class="m-5 mt-5 d-flex flex-row align-items-center">
 
-                <p style="font-size: 2rem;">
+            <div class="card" style="max-width: 700px; height: 500px; margin: auto;">
+
+                <!-- <img id="print1" src="{% static 'img/captura1.webp' %}" alt=""> -->
+                <div class="print" ></div>
+                <p class="fs-6">
                     Gerencie projetos de maneira fácil e rápida, defina orçamentos, prazos e administre servições de
                     que
                     seus projetos necessitam.
                 </p>
-
-                <img id="print1" src="{% static 'img/captura1.webp' %}" alt="">
-
             </div>
 
             <hr class="m-3">
