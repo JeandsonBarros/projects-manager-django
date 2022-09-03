@@ -7,7 +7,7 @@ from service.forms import ServiceForm
 from service.models import Service
 from django.core.paginator import Paginator
 
-def index(request, page=1):
+def listProjects(request, page=1):
     data = {}
     projects = Project.objects.filter(user=request.user)
 
@@ -18,7 +18,7 @@ def index(request, page=1):
    
     data['projects'] = paginator.get_page(page)
 
-    return render(request, 'project/index.html', data)
+    return render(request, 'project/list_projects.html', data)
 
 
 def saveProject(request):

@@ -51,7 +51,13 @@
     position: fixed;
     bottom: 140px;
     right: 20px;
-   
+     
+}
+
+#plusButton a {
+    border: 5px solid #fff;
+    border-radius: 10px;
+    color: #fff;
 }
 
 @media screen and (max-width: 1000px) {

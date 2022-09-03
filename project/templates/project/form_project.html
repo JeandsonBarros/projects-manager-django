@@ -1,14 +1,15 @@
 {% if project %}
-{% include 'project/includes/header.html' with title='- Editar projeto' %}
+  {% include 'project/includes/head.html' with title='- Editar projeto' %}
 {% else %}
-{% include 'project/includes/header.html' with title='- Cadastrar projeto' location='create' %}
+  {% include 'project/includes/head.html' with title='- Novo projeto' %}
 {% endif %}
+
+{% include 'includes/header.html' %}
+{% include 'includes/nav.html' with location='create' %}
 
 <main>
 
   <div class="container-sm">
-
-
 
     <div class="mt-3">
 
@@ -72,3 +73,7 @@
 </main>
 
 {% include 'includes/footer.html' %}
+
+{% load static %}
+<script src="{% static 'project/js/project.js' %}"></script>
+

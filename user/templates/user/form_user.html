@@ -1,8 +1,11 @@
 {% load static %}
-{% if user.is_authenticated  %}
-{% include 'user/includes/header.html' with title="- Dados da conta" %}
+{% if user.is_authenticated %}
+{% include 'user/includes/head.html' with title="- Dados da conta" %}
+{% include 'includes/header.html' %}
+{% include 'includes/nav.html' %}
 {% else %}
-{% include 'user/includes/header.html' with title="- Registro" %}
+{% include 'user/includes/head.html' with title="- Registro" %}
+{% include 'includes/header.html' %}
 {% endif %}
 
 <main>
@@ -18,6 +21,19 @@
     {% endfor %}
     {% endif %}
 
+    <form method="post" action="{% url 'imageUser' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ imageForm.as_p }}
+        <button type="submit">Upload</button>
+    </form>
+
+    <img src="/media/images/Pokmon.gif" alt="">
+
+    {% if img_obj %}
+    <h3>Succesfully uploaded : {{img_obj.title}}</h3>
+    <img src="{{ img_obj.image.url}}" alt="connect" style="max-height:300px">
+    {% endif %}
+
     <form class="mt-5"
         action="{% if request.user.is_authenticated %} {% url 'userData' %} {% else %} {% url 'register' %} {% endif %}"
         method="post">
@@ -29,10 +45,10 @@
             <img id="personCicle" src="{% static 'user/img/person-circle.svg' %}" width="70" alt="">
 
             <h1 class="titleH1">
-                {% if user.is_authenticated  %}
-                    Seus dados
+                {% if user.is_authenticated %}
+                Seus dados
                 {% else %}
-                    Cadastrar-se
+                Cadastrar-se
                 {% endif %}
             </h1>
 
@@ -64,16 +80,15 @@
                 {{ form.password2 }}
             </div>
 
-            {% if user.is_authenticated  %}
-                <input class="btn btn-info mt-4" type="submit" value="Salvar"">
-                <button class="btn btn-danger mt-1" onclick="deleteConfirm('Realmente deseja deletar esta conta permanentemente?', `{% url 'removeUser' %}`)">Deletar conta</button>
+            {% if user.is_authenticated %}
+            <input class="btn btn-info mt-4" type="submit" value="Salvar"">
+                <button class=" btn btn-danger mt-1"
+                onclick="deleteConfirm('Realmente deseja deletar esta conta permanentemente?', `{% url 'removeUser' %}`)">Deletar
+            conta</button>
             {% else %}
-                <input class="btn btn-info mt-3" type="submit" value="Cadastrar">
-                <a class="link-secondary mt-1 text-center" href="{% url 'loginView' %}">Entrar</a>
+            <input class="btn btn-info mt-3" type="submit" value="Cadastrar">
+            <a class="link-secondary mt-1 text-center" href="{% url 'loginView' %}">Entrar</a>
             {% endif %}
-
-           
-
 
         </div>
     </form>

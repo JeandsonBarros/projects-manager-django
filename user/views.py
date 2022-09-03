@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from .forms import NewUserForm
+from .forms import NewUserForm, ImageForm
 
 # Create your views here.
 def loginView(request):
@@ -39,15 +39,31 @@ def register(request):
             messages.error(request, "Registro sem sucesso. Informações inválidas.")
             return redirect("register")
     else:        
-        return render(request, 'user/form_user.html', {'form': NewUserForm()})
+        data = {}
+        data['from'] = NewUserForm()
+        return render(request, 'user/form_user.html', data)
 
 def logoutView(request):
     logout(request)
     return redirect('home')
 
+#https://djangocentral.com/uploading-images-with-django/
+def imageUser(request):
+    form = ImageForm(request.POST or None, request.FILES)
+
+    if form.is_valid():
+         form.save()
+         print(form.instance.image.url)
+         messages.success(request, "Imagem salva.")
+    else:
+         messages.error(request, "Erro ao salvar imagem.")
+
+    return redirect("userData")
+
 def userData(request):
     data = {}
     data['form'] = NewUserForm(instance=request.user)
+    data['imageForm'] = ImageForm()
 
     if request.method == "POST":
         form = NewUserForm(request.POST or None, instance=request.user)
