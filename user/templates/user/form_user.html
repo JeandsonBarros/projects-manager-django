@@ -24,15 +24,10 @@
     <form method="post" action="{% url 'imageUser' %}" enctype="multipart/form-data">
         {% csrf_token %}
         {{ imageForm.as_p }}
-        <button type="submit">Upload</button>
+        <button class="btn btn-info" type="submit">Upload</button>
     </form>
 
-    <img src="/media/images/Pokmon.gif" alt="">
-
-    {% if img_obj %}
-    <h3>Succesfully uploaded : {{img_obj.title}}</h3>
-    <img src="{{ img_obj.image.url}}" alt="connect" style="max-height:300px">
-    {% endif %}
+   
 
     <form class="mt-5"
         action="{% if request.user.is_authenticated %} {% url 'userData' %} {% else %} {% url 'register' %} {% endif %}"
@@ -42,7 +37,15 @@
 
         <div class="card d-flex flex-column justify-content-center">
 
-            <img id="personCicle" src="{% static 'user/img/person-circle.svg' %}" width="70" alt="">
+            {% if imageUser %}
+
+                {% for image in imageUser %}   
+                    <img id="personCicle" src="{{ image.image.url }}" width="70" height="70" alt="">
+                {% endfor %}    
+
+            {% else %}
+                    <img id="personCicle" src="{% static 'user/img/person-circle.svg' %}" width="70"  height="70" alt="">
+            {% endif %}
 
             <h1 class="titleH1">
                 {% if user.is_authenticated %}

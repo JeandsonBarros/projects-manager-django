@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import NewUserForm, ImageForm
+from .models import Image
 
 # Create your views here.
 def loginView(request):
@@ -51,12 +52,24 @@ def logoutView(request):
 def imageUser(request):
     form = ImageForm(request.POST or None, request.FILES)
 
+    """  imageGet = Image.objects.get(pk=4)
+    if imageGet:
+        form = ImageForm(request.POST or None, request.FILES, instance=imageGet)
+        image = form.save(commit=False)
+        image.user = request.user
+        image.save()
+        print(form.instance.image.url)
+        messages.success(request, "Imagem salva.")
+        return redirect("userData") """
+
     if form.is_valid():
-         form.save()
-         print(form.instance.image.url)
-         messages.success(request, "Imagem salva.")
+        image = form.save(commit=False)
+        image.user = request.user
+        image.save()
+        print(form.instance.image.url)
+        messages.success(request, "Imagem salva.")
     else:
-         messages.error(request, "Erro ao salvar imagem.")
+        messages.error(request, "Erro ao salvar imagem.")
 
     return redirect("userData")
 
@@ -64,6 +77,7 @@ def userData(request):
     data = {}
     data['form'] = NewUserForm(instance=request.user)
     data['imageForm'] = ImageForm()
+    data['imageUser'] = Image.objects.filter(user=request.user)
 
     if request.method == "POST":
         form = NewUserForm(request.POST or None, instance=request.user)

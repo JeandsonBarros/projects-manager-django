@@ -11,16 +11,19 @@ class NewUserForm(UserCreationForm):
         widget=forms.EmailInput(attrs={
             'class': 'form-control'
         }))
+
     username = forms.CharField(
         required=True,
         widget=forms.TextInput(attrs={
             'class': 'form-control'
         }))
+
     password1 = forms.CharField(
         required=True,
         widget=forms.PasswordInput(attrs={
             'class': 'form-control'
         }))
+
     password2 = forms.CharField(
         required=True,
         widget=forms.PasswordInput(attrs={
@@ -42,6 +45,13 @@ class NewUserForm(UserCreationForm):
 
 class ImageForm(forms.ModelForm):
     """Form for the image model"""
+
+    image = forms.ImageField(
+        required=True,
+        widget=forms.FileInput(attrs={
+            'class': 'form-control'
+        }))
+
     class Meta:
         model = Image
-        fields = ('title', 'image')
+        fields = ('image',)
