@@ -15,13 +15,14 @@ class ProjectForm(forms.ModelForm):
 
         widgets = {
             'name': forms.TextInput(attrs={
+                'spellcheck': 'true',
                 'class': 'form-control',
                 'placeholder': 'Nome do projeto',
             }),
             'description': forms.Textarea(attrs={
                 'class': 'form-control',
                 'placeholder': 'Descrição rápida do projeto',
-                'spellcheck': 'true'        
+                'spellcheck': 'true'       
             }),
             'manager': forms.TextInput(attrs={
                 'class': 'form-control',

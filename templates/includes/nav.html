@@ -31,7 +31,7 @@
         <span class="input-group-text bg-info border-0 rounded-0" id="basic-addon1">
           <img src="{% static 'img/search.svg' %}" alt="">
         </span>
-        <input type="search" name='search'
+        <input type="search" name='search' spellcheck="true"
           value="{% if request.GET.search %}{{ request.GET.search }}{% endif %}"
           class="form-control border-0 rounded-0" placeholder="Buscar projeto" aria-label="Search"
           aria-describedby="basic-addon1">
@@ -94,7 +94,7 @@
             <span class="input-group-text bg-info border-0" id="basic-addon1">
               <img src="{% static 'img/search.svg' %}" alt="">
             </span>
-            <input type="search" name='search' 
+            <input type="search" name='search' spellcheck="true"
               value="{% if request.GET.search %}{{ request.GET.search }}{% endif %}" class="form-control"
               placeholder="Buscar projeto" aria-label="Search" aria-describedby="basic-addon1">
           </div>

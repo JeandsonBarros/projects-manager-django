@@ -7,6 +7,9 @@
 {% include 'includes/header.html' %}
 {% include 'includes/nav.html' with location='create' %}
 
+<!DOCTYPE html>
+<html lang="pt-BR">
+
 <main>
 
   <div class="container-sm">
@@ -15,7 +18,7 @@
 
       <div id="alert"></div>
 
-      <form {% if project %} onsubmit="editProject(event);" {% endif %} id="form" class="mb-5 card" style="max-width: 600px; margin:auto;"
+      <form {% if project %} onsubmit="editProject(event);" {% endif %} id="form" class="mb-5 mt-5 card" style="max-width: 600px; margin:auto;"
         action="{% if project %}{% url 'editProject' project.id %}{% else %}{% url 'createProject' %}{% endif %}"
         method="POST">
 

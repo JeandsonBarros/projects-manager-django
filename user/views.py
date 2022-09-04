@@ -6,6 +6,7 @@ from .models import Image
 import os
 from django.conf import settings
 
+
 # Create your views here.
 def loginView(request):
     if request.user.is_authenticated:
@@ -57,7 +58,7 @@ def userData(request):
 
     if Image.objects.filter(user=request.user).exists():
         data['imageUser'] = Image.objects.filter(user=request.user)[0]
-    
+
     if request.method == "POST":
         form = NewUserForm(request.POST or None, instance=request.user)
         if form.is_valid():
@@ -99,19 +100,30 @@ def imageUserSave(request):
 
 def updateImageUser(request, pk):
     
-    imageGet = get_object_or_404(Image, pk=pk, user=request.user)
-    form = ImageForm(request.POST, request.FILES, instance=imageGet)
+    try:
+        imageGet = get_object_or_404(Image, pk=pk, user=request.user)
+        oldImageUrl = (f'{settings.BASE_DIR}/{imageGet.image.url}')
+        
+        form = ImageForm(request.POST, request.FILES, instance=imageGet)
 
-    if form.is_valid():
-        image = form.save(commit=False)
-        image.user = request.user
-        image.save()
-        messages.success(request, "Imagem editada.")
-        return redirect("userData")
-    else:
+        if form.is_valid():
+            image = form.save(commit=False)
+            image.user = request.user
+            image.save()
+
+            os.remove(oldImageUrl)
+
+            messages.success(request, "Imagem editada.")
+            return redirect("userData")
+
+        else:
+            messages.error(request, "Erro ao editar imagem.")
+            return redirect("userData")
+
+    except:
         messages.error(request, "Erro ao editar imagem.")
         return redirect("userData")
-
+    
 def deleteImageUser(request, pk):
     imageGet = get_object_or_404(Image, pk=pk, user=request.user)
 

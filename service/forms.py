@@ -11,6 +11,7 @@ class ServiceForm(forms.ModelForm):
         widgets = {
             
             'name': forms.TextInput(attrs={
+                'spellcheck': 'true',
                 'class': 'form-control',
                 'placeholder': 'Nome do serviço',
             }),
@@ -19,6 +20,7 @@ class ServiceForm(forms.ModelForm):
                 'placeholder': '2000,30',
             }),
             'description': forms.Textarea(attrs={
+                'spellcheck': 'true',
                 'class': 'form-control',
                 'placeholder': 'Descrição do serviço',
             })

@@ -11,5 +11,6 @@ urlpatterns = [
     path('upload-image-user/', login_required(views.imageUserSave, login_url='loginView'), name='imageUserSave'),
     path('update-image-user/<int:pk>', login_required(views.updateImageUser, login_url='loginView'), name='updateImageUser'),
     path('delete-image-user/<int:pk>', login_required(views.deleteImageUser, login_url='loginView'), name='deleteImageUser'),
+   
 ]
 
