@@ -18,6 +18,12 @@ class NewUserForm(UserCreationForm):
             'class': 'form-control'
         }))
 
+    first_name = forms.CharField(
+        required=True,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control'
+        }))
+
     password1 = forms.CharField(
         required=True,
         widget=forms.PasswordInput(attrs={
@@ -32,7 +38,7 @@ class NewUserForm(UserCreationForm):
      
     class Meta:
         model = User
-        fields = ("username", "email", "password1", "password2")
+        fields = ("username", "first_name", "email", "password1", "password2")
 
     def save(self, commit=True):
         user = super(NewUserForm, self).save(commit=False)
@@ -40,7 +46,6 @@ class NewUserForm(UserCreationForm):
         if commit:
             user.save()
         return user
-
 
 
 class ImageForm(forms.ModelForm):

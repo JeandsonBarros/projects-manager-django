@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import NewUserForm, ImageForm
@@ -41,44 +41,21 @@ def register(request):
             return redirect("register")
     else:        
         data = {}
-        data['from'] = NewUserForm()
+        data['form'] = NewUserForm()
         return render(request, 'user/form_user.html', data)
 
 def logoutView(request):
     logout(request)
     return redirect('home')
 
-#https://djangocentral.com/uploading-images-with-django/
-def imageUser(request):
-    form = ImageForm(request.POST or None, request.FILES)
-
-    """  imageGet = Image.objects.get(pk=4)
-    if imageGet:
-        form = ImageForm(request.POST or None, request.FILES, instance=imageGet)
-        image = form.save(commit=False)
-        image.user = request.user
-        image.save()
-        print(form.instance.image.url)
-        messages.success(request, "Imagem salva.")
-        return redirect("userData") """
-
-    if form.is_valid():
-        image = form.save(commit=False)
-        image.user = request.user
-        image.save()
-        print(form.instance.image.url)
-        messages.success(request, "Imagem salva.")
-    else:
-        messages.error(request, "Erro ao salvar imagem.")
-
-    return redirect("userData")
-
 def userData(request):
     data = {}
     data['form'] = NewUserForm(instance=request.user)
     data['imageForm'] = ImageForm()
-    data['imageUser'] = Image.objects.filter(user=request.user)
 
+    if Image.objects.filter(user=request.user).exists():
+        data['imageUser'] = Image.objects.filter(user=request.user)[0]
+    
     if request.method == "POST":
         form = NewUserForm(request.POST or None, instance=request.user)
         if form.is_valid():
@@ -100,3 +77,48 @@ def removeUser(request):
         messages.error(request, "Error:" + NameError)
 
     return redirect("loginView")
+
+
+""" ------ Start views image user --------- """
+
+#https://djangocentral.com/uploading-images-with-django/
+def imageUserSave(request):
+    form = ImageForm(request.POST or None, request.FILES)
+
+    if form.is_valid():
+        image = form.save(commit=False)
+        image.user = request.user
+        image.save()
+        messages.success(request, "Imagem salva.")
+    else:
+        messages.error(request, "Erro ao salvar imagem.")
+
+    return redirect("userData")
+
+def updateImageUser(request, pk):
+    
+    imageGet = get_object_or_404(Image, pk=pk, user=request.user)
+    form = ImageForm(request.POST, request.FILES, instance=imageGet)
+
+    if form.is_valid():
+        image = form.save(commit=False)
+        image.user = request.user
+        image.save()
+        messages.success(request, "Imagem editada.")
+        return redirect("userData")
+    else:
+        messages.error(request, "Erro ao editar imagem.")
+        return redirect("userData")
+
+def deleteImageUser(request, pk):
+    imageGet = get_object_or_404(Image, pk=pk, user=request.user)
+
+    try:
+        imageGet.delete()
+        messages.success(request, "Imagem removida.")
+    except:
+        messages.success(request, "Erro ao remover imagem.")
+    
+    return redirect("userData")
+
+""" ------ End views image user --------- """

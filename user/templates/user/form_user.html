@@ -1,33 +1,65 @@
 {% load static %}
 {% if user.is_authenticated %}
-{% include 'user/includes/head.html' with title="- Dados da conta" %}
-{% include 'includes/header.html' %}
-{% include 'includes/nav.html' %}
+    {% include 'user/includes/head.html' with title="- Dados da conta" %}
+    {% include 'includes/header.html' %}
+    {% include 'includes/nav.html' %}
 {% else %}
-{% include 'user/includes/head.html' with title="- Registro" %}
-{% include 'includes/header.html' %}
+    {% include 'user/includes/head.html' with title="- Registro" %}
+    {% include 'includes/header.html' %}
 {% endif %}
 
 <main>
 
     {% if messages %}
-    {% for message in messages %}
-    <div id="alert"
-        class="alert rounded-0 {% if message.tags %}{{ message.tags }}{% endif %} alert-dismissible fade show "
-        role="alert">
-        <span> {{ message }} </span>
-        <button type="button" class="btn-close" onclick="hidenAlert()"></button>
-    </div>
-    {% endfor %}
+        {% for message in messages %}
+            <div id="alert"
+                class="alert rounded-0 {% if message.tags %}{{ message.tags }}{% endif %} alert-dismissible fade show "
+                role="alert">
+                <span> {{ message }} </span>
+                <button type="button" class="btn-close" onclick="hidenAlert()"></button>
+            </div>
+        {% endfor %}
     {% endif %}
 
-    <form method="post" action="{% url 'imageUser' %}" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ imageForm.as_p }}
-        <button class="btn btn-info" type="submit">Upload</button>
-    </form>
+    {% if user.is_authenticated %}
 
-   
+        <form method="post" class="mt-5"
+            action="{% if imageUser %} {% url 'updateImageUser' imageUser.id %} {% else %} {% url 'imageUserSave' %} {% endif %}"
+            enctype="multipart/form-data">
+
+            <div class="card">
+
+                {% if imageUser %}
+                    <img id="personCicle" src="{{ imageUser.image.url }}" width="70" height="70" alt="">
+                {% else %}
+                    <img id="personCicle" src="{% static 'user/img/person-circle.svg' %}" width="70" height="70" alt="">
+                {% endif %}
+
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="id_image">Imagem do perfil</label>
+                    {{ imageForm.image }}
+                </div>
+
+                {% if imageUser %}
+                    <div class="btn-group" role="group">
+                        <button class="btn btn-warning" type="submit">
+                            Atualizar imagem
+                        </button>
+                        <button class="btn btn-danger" onclick="deleteConfirm('Realmente deseja remover a foto do perfil?', `{% url 'deleteImageUser' imageUser.id %}`)">
+                            Remover imagem
+                        </button>
+                    </div>
+                {% else %}
+                    <button class="btn btn-info" type="submit">
+                        Salvar imagem
+                    </button>
+                {% endif %}
+
+            </div>
+        </form>
+
+    {% endif %}
 
     <form class="mt-5"
         action="{% if request.user.is_authenticated %} {% url 'userData' %} {% else %} {% url 'register' %} {% endif %}"
@@ -37,27 +69,26 @@
 
         <div class="card d-flex flex-column justify-content-center">
 
-            {% if imageUser %}
-
-                {% for image in imageUser %}   
-                    <img id="personCicle" src="{{ image.image.url }}" width="70" height="70" alt="">
-                {% endfor %}    
-
-            {% else %}
-                    <img id="personCicle" src="{% static 'user/img/person-circle.svg' %}" width="70"  height="70" alt="">
+            {% if not user.is_authenticated %}
+                <img id="personCicle" src="{% static 'user/img/person-circle.svg' %}" width="70" height="70" alt="">
             {% endif %}
 
             <h1 class="titleH1">
                 {% if user.is_authenticated %}
-                Seus dados
+                    Seus dados
                 {% else %}
-                Cadastrar-se
+                    Cadastrar-se
                 {% endif %}
             </h1>
 
             <div class="mt-2">
-                <label class="labelForm" for="id_username">Nome</label>
+                <label class="labelForm" for="id_username">Nome de usuário</label>
                 {{ form.username }}
+            </div>
+
+            <div class="mt-2">
+                <label class="labelForm" for="id_username">Nome</label>
+                {{ form.first_name }}
             </div>
 
             <div class="mt-2">
