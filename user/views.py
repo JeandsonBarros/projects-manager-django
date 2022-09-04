@@ -3,6 +3,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import NewUserForm, ImageForm
 from .models import Image
+import os
+from django.conf import settings
 
 # Create your views here.
 def loginView(request):
@@ -114,10 +116,11 @@ def deleteImageUser(request, pk):
     imageGet = get_object_or_404(Image, pk=pk, user=request.user)
 
     try:
+        os.remove(f'{settings.BASE_DIR}/{imageGet.image.url}')
         imageGet.delete()
         messages.success(request, "Imagem removida.")
     except:
-        messages.success(request, "Erro ao remover imagem.")
+        messages.error(request, "Erro ao remover imagem.")
     
     return redirect("userData")
 
