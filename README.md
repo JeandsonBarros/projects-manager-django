@@ -14,9 +14,9 @@
 Site para gerenciamento de projetos, desenvolvido com o framework web Python Django.
 
 O site conta com as seguintes funcionalidades:
-[1. Gerenciamento de projetos](#1-gerenciamento-de-projetos)
-[2. Gerenciamento de serviços de projetos](#2-gerenciamento-de-serviços-de-projetos)
-[3. Autenticação.](#3-autenticação)
+[1. Gerenciamento de projetos](#1-gerenciamento-de-projetos)<br />
+[2. Gerenciamento de serviços de projetos](#2-gerenciamento-de-serviços-de-projetos)<br />
+[3. Autenticação.](#3-autenticação)<br />
 
 ![Alt Text](https://media3.giphy.com/media/DCfMf73sT3awhZTCD2/giphy.gif?cid=790b7611498168649508e45e4577644a2f7f14c8375895d7&rid=giphy.gif&ct=g)
 ![](./e.gif)
